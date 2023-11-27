@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-11-27T17:37:39+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Recent projects</title><subtitle>Build Jekyll site with the GitBook style.
+</subtitle><author><name>t5w0rd</name></author><entry><title type="html">OpenAI Adapter</title><link href="http://localhost:4000/projects/2023-09-28-openapi-adapter.html" rel="alternate" type="text/html" title="OpenAI Adapter" /><published>2023-09-28T04:33:47+08:00</published><updated>2023-09-28T04:33:47+08:00</updated><id>http://localhost:4000/projects/openapi-adapter</id><content type="html" xml:base="http://localhost:4000/projects/2023-09-28-openapi-adapter.html"><![CDATA[<p><a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/:license-apache-blue.svg" alt="License" /></a></p>
+
+<p>Deploy local API based on OpenAI API.</p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li>OpenAI API Adapter</li>
+  <li>Chat Bot</li>
+</ul>
+
+<h2 id="architecture">Architecture</h2>
+
+<p><img src="/assets/img/architecture.jpg" alt="Architecture" /></p>
+
+<h2 id="usage">Usage</h2>
+
+<p>First, clone this repo and the open source LLM repos.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/tutils/openai-adapter.git
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Supported</th>
+      <th style="text-align: left">Used in examples</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/baichuan-inc/baichuan2">Baichuan2</a></td>
+      <td style="text-align: left"><a href="https://huggingface.co/baichuan-inc/Baichuan2-13B-Chat-4bits">Baichuan2-13B-Chat-4bits</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM2</a></td>
+      <td style="text-align: left"><a href="https://huggingface.co/THUDM/chatglm2-6b-int4">chatglm2-6b-int4</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><a href="https://github.com/QwenLM/Qwen">Qwen</a></td>
+      <td style="text-align: left"><a href="https://huggingface.co/Qwen/Qwen-14B-Chat-Int4">Qwen-14B-Chat-Int4</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Make sure the dependencies of the LLMs are installed correctly, and the directory tree should like this:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tree
+<span class="nb">.</span>
+├── Baichuan2
+│   └── baichuan-inc
+│       └── Baichuan2-13B-Chat-4bits
+├── ChatGLM2-6B
+│   └── THUDM
+│       └── chatglm2-6b-int4
+├── Qwen
+│   └── Qwen
+│       └── Qwen-14B-Chat-Int4
+└── openai-adapter
+    ├── adapter
+    └── examples
+</code></pre></div></div>
+
+<p>Then, start the api server.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>openai-adapter
+pip <span class="nb">install</span> <span class="nt">-i</span> requirements.txt
+<span class="c"># USE_SERVICE can be: baichuan2, chatglm2, qwen</span>
+<span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PWD</span> <span class="nv">USE_SERVICE</span><span class="o">=</span>baichuan2 python examples/api_server.py
+</code></pre></div></div>
+
+<p>Finally, launch your ChatGPT application (e.g. <a href="https://github.com/Yidadaa/ChatGPT-Next-Web">ChatGPT Next</a>)</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--rm</span> <span class="nt">-p</span> 3000:3000 <span class="nt">-e</span> <span class="nv">BASE_URL</span><span class="o">=</span><span class="s1">'http://localhost:8000'</span> yidadaa/chatgpt-next-web
+</code></pre></div></div>
+
+<p>You can test the application mentioned above by visiting http://localhost:3000/.</p>
+
+<p><img src="/assets/img/baichuan2_chatgpt_next.jpg" alt="ChatGPT Next" /></p>
+
+<p>Of course, you can also directly use the SDK provided by OpenAI.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">openai</span>
+<span class="n">openai</span><span class="p">.</span><span class="n">api_base</span> <span class="o">=</span> <span class="sh">"</span><span class="s">http://localhost:8000/v1</span><span class="sh">"</span>
+<span class="n">openai</span><span class="p">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="sh">"</span><span class="s">none</span><span class="sh">"</span>
+
+<span class="c1"># create a request activating streaming response
+</span><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">openai</span><span class="p">.</span><span class="n">ChatCompletion</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="sh">"</span><span class="s">gpt-3.5-turbo</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">user</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">你好</span><span class="sh">"</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">stream</span><span class="o">=</span><span class="bp">True</span>
+    <span class="c1"># Specifying stop words in streaming output format is not yet supported and is under development.
+</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nf">hasattr</span><span class="p">(</span><span class="n">chunk</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">delta</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">delta</span><span class="p">.</span><span class="n">content</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># create a request not activating streaming response
+</span><span class="n">response</span> <span class="o">=</span> <span class="n">openai</span><span class="p">.</span><span class="n">ChatCompletion</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="sh">"</span><span class="s">gpt-3.5-turbo</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">user</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">你好</span><span class="sh">"</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">stream</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+    <span class="n">stop</span><span class="o">=</span><span class="p">[]</span> <span class="c1"># You can add custom stop words here, e.g., stop=["Observation:"] for ReAct prompting.
+</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">message</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>For other usage details, see <a href="https://github.com/tutils/openai-adapter/tree/main/examples">examples</a>.</p>]]></content><author><name>t5w0rd</name></author><category term="projects" /><summary type="html"><![CDATA[]]></summary></entry></feed>
