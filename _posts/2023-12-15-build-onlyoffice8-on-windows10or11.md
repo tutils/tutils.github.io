@@ -21,7 +21,7 @@ mermaid: true
     ```
 
 ### 2. 准备编译工作区
-  * a. 安装 [Git]()
+  * a. 安装 [Git](https://git-scm.com/download/win)
   * b. 克隆编译工具仓库，注意仓库应存在一级上级目录，因为build_tools在编译过程中会自动下载其他OnlyOffice仓库到其平级目录中
     ```cmd
     cd C:\
@@ -49,21 +49,21 @@ mermaid: true
         ```
 
 ### 3. 准备其他依赖工具
-  * a. Python 3
+  * a. [Python 3](https://www.python.org/downloads/windows/)
     ```cmd
     pip install setuptools
     ```
-  * b. TortoiseSVN，安装时注意勾选上安装命令行工具
-  * c. Windows 10 SDK, version 2004 (10.0.19041.0)，该这个版本以解决 v8 编译兼容性问题，同时解决缺失 cdb 的问题
-  * d. Visual Studio Community 2019，同时 OnlyOffice8 编译脚本只支持 VS2015 和 VS2019，该版本解决不支持 /std:c++17 选项问题，
+  * b. [TortoiseSVN](https://tortoisesvn.net/downloads.zh.html)，安装时注意勾选上安装命令行工具
+  * c. [Windows 10 SDK, version 2004 (10.0.19041.0)](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/)，该这个版本以解决 v8 编译兼容性问题，同时解决缺失 cdb 的问题
+  * d. [Visual Studio Community 2019](https://my.visualstudio.com/Downloads?q=Visual%20Studio%20Community%202019)，同时 OnlyOffice8 编译脚本只支持 VS2015 和 VS2019，该版本解决不支持 /std:c++17 选项问题，
     * i. 安装勾选“使用C++的桌面开发”
     * ii. 在右侧安装详细信息中取消勾选全部 Windows SDK
-  * e. Qt 5.15.2，安装时勾选 Qt > Qt 5.15.2 > MSVC 2019 64-bit。该版本解决默认 Qt5.9.9 最高只支持到 MSVC2017 的问题
-  * f. NodeJS 14
+  * e. [Qt 5.15.2](https://www.qt.io/download)，安装时勾选 Qt > Qt 5.15.2 > MSVC 2019 64-bit。该版本解决默认 Qt5.9.9 最高只支持到 MSVC2017 的问题
+  * f. [NodeJS 14](https://nodejs.org/download/release/v14.21.3/)
     ```cmd
     npm install -g grunt-cli pkg yarn
     ```
-  * g. Perl
+  * g. [Perl](https://strawberryperl.com/)
 
 ### 4. 生成编译配置文件
     ```cmd
