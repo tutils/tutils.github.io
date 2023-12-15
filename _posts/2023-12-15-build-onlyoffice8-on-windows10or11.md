@@ -19,6 +19,7 @@ mermaid: true
     # 输出 cp936 代表 GBK        [X]
     # 输出 cp65001 代表 UTF-8    [√]
     ```
+
 ### 2. 准备编译工作区
   * a. 安装 [Git]()
   * b. 克隆编译工具仓库，注意仓库应存在一级上级目录，因为build_tools在编译过程中会自动下载其他OnlyOffice仓库到其平级目录中
@@ -46,6 +47,7 @@ mermaid: true
         print("exit, backup workspace")
         sys.exit(0)
         ```
+
 ### 3. 准备其他依赖工具
   * a. Python 3
     ```cmd
@@ -62,13 +64,16 @@ mermaid: true
     npm install -g grunt-cli pkg yarn
     ```
   * g. Perl
+
 ### 4. 生成编译配置文件
     ```cmd
     # 如果编译全部模块：--module "desktop builder server"
     python configure.py --branch release/v8.0.0 --module desktop --update 1 --qt-dir C:\Qt\5.15.2 --platform win_64 --vs-version 2019
     ```
+
 ### 5. 编译，编译时使用普通 cmd 即可。生成目录在 build_tools\out 下
     ```cmd
     python make.py
     ```
+
 ### 6. 打包
