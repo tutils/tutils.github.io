@@ -66,14 +66,14 @@ mermaid: true
   * g. [Perl](https://strawberryperl.com/)
 
 ### 4. 生成编译配置文件
-    ```cmd
-    # 如果编译全部模块：--module "desktop builder server"
-    python configure.py --branch release/v8.0.0 --module desktop --update 1 --qt-dir C:\Qt\5.15.2 --platform win_64 --vs-version 2019
-    ```
+  ```cmd
+  # 如果编译全部模块：--module "desktop builder server"
+  python configure.py --branch release/v8.0.0 --module desktop --update 1 --qt-dir C:\Qt\5.15.2 --platform win_64 --vs-version 2019
+  ```
 
 ### 5. 编译，编译时使用普通 cmd 即可。生成目录在 build_tools\out 下
-    ```cmd
-    python make.py
-    ```
+  ```cmd
+  python make.py
+  ```
 
 ### 6. 打包
